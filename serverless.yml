@@ -1,0 +1,87 @@
+service: lambda-form
+
+provider:
+  name: aws
+  region: ${opt:region, 'ap-southeast-2'}
+  runtime: nodejs8.10
+  stackName: lambda-form-dev
+  stage: ${opt:stage, 'dev'}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DeleteItem
+        - dynamodb:PutItem
+        - dynamodb:Scan
+      Resource:
+        Fn::Join:
+          - ""
+          - - "arn:aws:dynamodb:"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS::AccountId
+            - :table/
+            - Ref: DatabaseTable
+
+functions:
+  SubmitFormApi:
+    name: lambda-form-api-${self:provider.stage}
+    handler: handler.handler
+    environment:
+      TABLE_NAME:
+        Ref: DatabaseTable
+    events:
+      - http:
+          cors: true
+          method: any
+          path: /{proxy+}
+
+package:
+  include:
+    - handler.js
+
+resources:
+  Resources:
+    DatabaseTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        BillingMode: PAY_PER_REQUEST
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+
+    WebsiteBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        WebsiteConfiguration:
+          IndexDocument: index.html
+    WebsiteBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Action: s3:GetObject
+              Effect: Allow
+              Principal: "*"
+              Resource:
+                Fn::Join:
+                  - ""
+                  - - "arn:aws:s3:::"
+                    - Ref: WebsiteBucket
+                    - /*
+        Bucket:
+          Ref: WebsiteBucket
+
+  Outputs:
+    # Replace these curly brackets with CloudFormation outputs.
+    WebsiteBucketName:
+      Value:
+        Ref: WebsiteBucket
+    WebsiteURL:
+      Value:
+        Fn::GetAtt:
+          - WebsiteBucket
+          - WebsiteURL
