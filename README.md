@@ -68,7 +68,7 @@ Your app is ready to be deployed!
 
 - [ ] Remove hardcoded config (api endpoint, s3 bucket etc)
 - [ ] Add auth handling to the endpoint
-- [ ] Flesh out the form and add user feedback for submissions
+- [ ] Flesh out the form, add validation and add user feedback for submissions
 - [ ] Add a page to view submissions
 
 ### ...maybe..?
@@ -78,4 +78,5 @@ Your app is ready to be deployed!
 ## Once it's looking good
 
 - [ ] Recreated all the resources in the Platform acc
+- [ ] Set up CI
 - [ ] Add a Route53 record or something so it's hosted on the 99designs domain instead

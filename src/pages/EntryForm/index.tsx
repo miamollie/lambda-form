@@ -1,11 +1,25 @@
 import React, { useState } from "react";
-import Paper from "../components/Paper";
-import Row from "../components/Row";
-import submitEntry from "../api/submitEntry";
+import Paper from "../../components/Paper";
+import Row from "../../components/Row";
+import uuid from "uuid/v4";
+import axios from "axios";
+import { API_BASE_URL } from "../../../src/config";
+import { EntryType } from "../../../src/types";
+import { withRouter } from "react-router-dom";
+import { RouterProps } from "react-router";
 
-export default function EntryForm() {
+function EntryForm({ history }: RouterProps) {
   const [organisation, setOrganisation] = useState("");
   const [website, setWebsite] = useState("");
+
+  function submitEntry(entry: EntryType) {
+    const id = uuid();
+
+    axios
+      .put(`${API_BASE_URL}/entry/${id}`, { ...entry, id })
+      .then(() => history.push("/thank-you"))
+      .catch(() => window.alert("oh noes there was an error")); //TODO redirect to success page
+  }
 
   return (
     <Paper>
@@ -49,3 +63,5 @@ export default function EntryForm() {
     </Paper>
   );
 }
+
+export default withRouter(EntryForm);
