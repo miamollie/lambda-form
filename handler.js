@@ -59,9 +59,9 @@ function handleRequest(event) {
       };
     }
 
-    const { title } = JSON.parse(event.body);
+    const { organisation, website } = JSON.parse(event.body);
 
-    return writeEntry({ id: idMatch[1], title });
+    return writeEntry({ id: idMatch[1], organisation, website });
   }
 
   return { statusCode: 404 };
@@ -104,11 +104,11 @@ async function readEntries() {
   return { body: JSON.stringify(entries), statusCode: 200 };
 }
 
-async function writeEntry({ id, title }) {
+async function writeEntry({ id, organisation, website }) {
   console.log("writing entry", id);
 
   const parameters = {
-    Item: AWS.DynamoDB.Converter.marshall({ id, title }),
+    Item: AWS.DynamoDB.Converter.marshall({ id, organisation, website }),
     TableName: TABLE_NAME
   };
 
