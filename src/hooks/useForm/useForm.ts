@@ -13,7 +13,7 @@ interface InputProp {
   ) => void;
 }
 
-type InputPropsObject<S> = { [key in keyof S]?: InputProp };
+export type InputPropsObject<S> = { [key in keyof S]?: InputProp };
 
 function useForm<S extends State>(initialValues: S): [S, InputPropsObject<S>] {
   const [values, setValues] = useState<S>(initialValues);
