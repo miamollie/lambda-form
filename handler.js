@@ -2,7 +2,9 @@ const TABLE_NAME = process.env.TABLE_NAME.trim();
 
 const AWS = require("aws-sdk");
 
-const dynamoDb = new AWS.DynamoDB();
+const dynamoDb = new AWS.DynamoDB.DocumentClient({
+  convertEmptyValues: true
+});
 
 async function handler(event) {
   let response;
@@ -59,9 +61,7 @@ function handleRequest(event) {
       };
     }
 
-    const { organisation, website } = JSON.parse(event.body);
-
-    return writeEntry({ id: idMatch[1], organisation, website });
+    return writeEntry({ id: idMatch[1], body: event.body });
   }
 
   return { statusCode: 404 };
@@ -104,11 +104,73 @@ async function readEntries() {
   return { body: JSON.stringify(entries), statusCode: 200 };
 }
 
-async function writeEntry({ id, organisation, website }) {
+async function writeEntry({ id, body }) {
   console.log("writing entry", id);
+  const {
+    applicantName,
+    city,
+    collectEmailAgreement,
+    contestType,
+    country,
+    deadline,
+    description,
+    email,
+    featureAgreement,
+    foundationYear,
+    hasParentAffiliation,
+    howDidYouHear,
+    localisation,
+    organisationName,
+    phoneNumber,
+    priorUse,
+    privacyAgreement,
+    province,
+    registrationStatus,
+    role,
+    sector,
+    socialMediaFollowers,
+    socialMediaHandle,
+    specificEvent,
+    streetAddress,
+    streetAddressTwo,
+    taxId,
+    website,
+    zip
+  } = JSON.parse(body);
 
   const parameters = {
-    Item: AWS.DynamoDB.Converter.marshall({ id, organisation, website }),
+    Item: AWS.DynamoDB.Converter.marshall({
+      id,
+      applicantName,
+      city,
+      collectEmailAgreement,
+      contestType,
+      country,
+      deadline,
+      description,
+      email,
+      featureAgreement,
+      foundationYear,
+      hasParentAffiliation,
+      howDidYouHear,
+      localisation,
+      organisationName,
+      phoneNumber,
+      priorUse,
+      privacyAgreement,
+      province,
+      registrationStatus,
+      role,
+      sector,
+      socialMediaFollowers,
+      socialMediaHandle,
+      specificEvent,
+      streetAddress,
+      streetAddressTwo,
+      taxId,
+      website,
+      zip
+    }),
     TableName: TABLE_NAME
   };
 

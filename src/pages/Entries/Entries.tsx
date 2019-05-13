@@ -25,13 +25,13 @@ export default function Entries() {
 
   return (
     <Paper>
-      <Typography variant="h2" component="h1">
+      <Typography variant="h3" component="h1">
         This month's applications
       </Typography>
 
       {!entries.length && <p>No entries yet</p>}
       {entries.map((e: EntryResponse) => (
-        <Card key={e.id}>{e.organisationName}</Card>
+        <Card key={e.id}>{e.website}</Card>
       ))}
     </Paper>
   );
