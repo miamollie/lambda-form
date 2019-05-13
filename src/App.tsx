@@ -1,16 +1,13 @@
 import React from "react";
 
 import Router from "./Router";
-import Header from "./components/Header";
+import Layout from "./components/Layout";
 
 function App() {
   return (
-    <>
-      <Header>
-        <p>This is a form that submits to lambda! YAY</p>
-      </Header>
+    <Layout>
       <Router />
-    </>
+    </Layout>
   );
 }
 
