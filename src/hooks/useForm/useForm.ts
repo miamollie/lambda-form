@@ -8,7 +8,9 @@ interface InputProp {
   name: string;
   value: string;
   id: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => void;
 }
 
 type InputPropsObject<S> = { [key in keyof S]?: InputProp };
@@ -23,8 +25,11 @@ function useForm<S extends State>(initialValues: S): [S, InputPropsObject<S>] {
       name: key.toString(),
       value: values[key],
       id: key.toString(),
-      onChange: (e: ChangeEvent<HTMLInputElement>) =>
-        setValues({ ...values, [key]: e.target.value })
+      onChange: (
+        e: ChangeEvent<
+          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+        >
+      ) => setValues({ ...values, [key]: e.target.value })
     };
   });
 

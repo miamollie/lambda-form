@@ -12,13 +12,12 @@ export interface Address {
 export interface Applicant {
   role: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  applicantName: string;
   phoneNumber: string;
 }
 
 export interface Organisation {
-  name: string;
+  organisationName: string;
   streetAddress: string;
   streetAddressTwo?: string;
   city: string;
@@ -38,10 +37,10 @@ export interface Organisation {
 }
 
 export interface RelationshipToNineNine {
-  priorUse: boolean;
   contestType: AvailableContestTypes;
   deadline: string;
   specificEvent: boolean;
+  priorUse: boolean;
   howDidYouHear: ReferralType;
   featureAgreement: boolean;
   collectEmailAgreement: boolean;
