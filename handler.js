@@ -2,7 +2,7 @@ const TABLE_NAME = process.env.TABLE_NAME.trim();
 
 const AWS = require("aws-sdk");
 
-const dynamoDb = new AWS.DynamoDB.DocumentClient({
+const dynamoDb = new AWS.DynamoDB({
   convertEmptyValues: true
 });
 
