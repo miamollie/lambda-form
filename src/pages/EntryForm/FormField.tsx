@@ -11,7 +11,7 @@ const FormField: React.FunctionComponent<Props> = ({ children, variation }) => (
       padding: "30px",
       display: "flex",
       flexDirection: variation,
-      alignItems: "center"
+      alignItems: variation === "row" ? "center" : "normal"
     }}
   >
     {children}
