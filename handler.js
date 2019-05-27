@@ -6,6 +6,8 @@ const dynamoDb = new AWS.DynamoDB({
   convertEmptyValues: true
 });
 
+const ses = new AWS.SES();
+
 async function handler(event) {
   let response;
 
@@ -45,10 +47,6 @@ function handleRequest(event) {
   const baseMatch = path.match(/^\/entries\/?$/);
   const idMatch = path.match(/^\/entry\/([^/]+)\/?$/);
 
-  // if (method === "DELETE" && idMatch) {
-  //   return deleteentry(idMatch[1]);
-  // }
-
   if (method === "GET" && baseMatch) {
     return readEntries();
   }
@@ -67,24 +65,7 @@ function handleRequest(event) {
   return { statusCode: 404 };
 }
 
-// async function deleteentry(id) {
-//   console.log("deleting entry", id);
-
-//   const parameters = {
-//     Key: AWS.DynamoDB.Converter.marshall({ id }),
-//     TableName: TABLE_NAME
-//   };
-
-//   // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#deleteItem-property
-//   await dynamoDb.deleteItem(parameters).promise();
-
-//   console.log("deleted entry", id);
-
-//   return { statusCode: 204 };
-// }
-
 //TODO readEntries with pagination somehow, or by month...
-
 async function readEntries() {
   console.log("reading entry(s)");
 
@@ -104,6 +85,36 @@ async function readEntries() {
   return { body: JSON.stringify(entries), statusCode: 200 };
 }
 
+async function sendApplicationReceivedEmail() {
+  //send email code
+  const emailParams = {
+    Source: "miamollie@gmail.com",
+    ReplyToAddresses: ["miamollie@gmail.com"], //this could be the account manager in the success email
+    Destination: {
+      ToAddresses: ["miamollie@gmail.com"],
+      CcAddresses: ["miamollie@gmail.com"] //this could be whoever wants to know about new applications
+    },
+    Message: {
+      Body: {
+        Html: {
+          Charset: "UTF-8",
+          Data: "Email content as formatted HTML"
+        },
+        Text: {
+          Charset: "UTF-8",
+          Data: "email content as text!"
+        }
+      },
+      Subject: {
+        Charset: "UTF-8",
+        Data: "Application received!"
+      }
+    }
+  };
+
+  await ses.sendEmail(emailParams).promise();
+}
+
 async function writeEntry({ id, body }) {
   console.log("writing entry", id);
 
@@ -119,6 +130,7 @@ async function writeEntry({ id, body }) {
   await dynamoDb.putItem(parameters).promise();
 
   console.log("wrote entry", id);
+  await sendApplicationReceivedEmail();
 
   return { statusCode: 204 };
 }
