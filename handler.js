@@ -106,70 +106,11 @@ async function readEntries() {
 
 async function writeEntry({ id, body }) {
   console.log("writing entry", id);
-  const {
-    applicantName,
-    city,
-    collectEmailAgreement,
-    contestType,
-    country,
-    deadline,
-    description,
-    email,
-    featureAgreement,
-    foundationYear,
-    hasParentAffiliation,
-    howDidYouHear,
-    localisation,
-    organisationName,
-    phoneNumber,
-    priorUse,
-    privacyAgreement,
-    province,
-    registrationStatus,
-    role,
-    sector,
-    socialMediaFollowers,
-    socialMediaHandle,
-    specificEvent,
-    streetAddress,
-    streetAddressTwo,
-    taxId,
-    website,
-    zip
-  } = JSON.parse(body);
 
   const parameters = {
     Item: AWS.DynamoDB.Converter.marshall({
       id,
-      applicantName,
-      city,
-      collectEmailAgreement,
-      contestType,
-      country,
-      deadline,
-      description,
-      email,
-      featureAgreement,
-      foundationYear,
-      hasParentAffiliation,
-      howDidYouHear,
-      localisation,
-      organisationName,
-      phoneNumber,
-      priorUse,
-      privacyAgreement,
-      province,
-      registrationStatus,
-      role,
-      sector,
-      socialMediaFollowers,
-      socialMediaHandle,
-      specificEvent,
-      streetAddress,
-      streetAddressTwo,
-      taxId,
-      website,
-      zip
+      ...JSON.parse(body)
     }),
     TableName: TABLE_NAME
   };
