@@ -2,7 +2,7 @@ service: lambda-form
 
 provider:
   name: aws
-  region: ${opt:region, 'ap-southeast-2'}
+  region: ${opt:region, 'us-east-1'}
   runtime: nodejs8.10
   stackName: lambda-form-dev
   stage: ${opt:stage, 'dev'}
