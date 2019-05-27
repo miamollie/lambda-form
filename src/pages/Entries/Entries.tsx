@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 
-import Card from "@material-ui/core/Card";
 import axios from "axios";
 import { API_BASE_URL } from "../../../src/config";
 import { EntryType } from "../../../src/types";
+
+import Entry from "./Entry";
 
 interface EntryResponse extends EntryType {
   id: string;
@@ -24,14 +25,11 @@ export default function Entries() {
   }
 
   return (
-    <Paper>
-      <Typography variant="h3" component="h1">
-        This month's applications
-      </Typography>
-
+    <Paper style={{ padding: "30px" }}>
+      <Typography component="h3">This month's applications</Typography>
       {!entries.length && <p>No entries yet</p>}
       {entries.map((e: EntryResponse) => (
-        <Card key={e.id}>{e.website}</Card>
+        <Entry key={e.id} entry={e} />
       ))}
     </Paper>
   );
