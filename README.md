@@ -23,7 +23,8 @@ Test the api with cURL:
 ```shell
 curl --request GET "https://9wrlwjpyjh.execute-api.us-east-1.amazonaws.com/dev/entries"
 
-curl --data '{"title": "Here is an application"}' --request PUT "https://9wrlwjpyjh.execute-api.us-east-1.amazonaws.com/dev/entry/1"
+  curl 'https://9wrlwjpyjh.execute-api.us-east-1.amazonaws.com/dev/entry/828a9e26-e658-4e1b-916f-627b963ede4e' -X PUT -H 'Accept: application/json, text/plain, */*' -H 'Referer: http://localhost:3000/new' -H 'Origin: http://localhost:3000' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36' -H 'Content-Type: application/json;charset=UTF-8' --data-binary '{"email":"derp@gmail.com","phoneNumber":"2","website":"http://localhost:3000/new","applicantName":"Mia de Burca","organisationName":"zzzzzz","role":"r","streetAddress":"Leveson Street, 45","streetAddressTwo":"45","city":"NORTH MELBOURNE","province":"a","zip":"3051","country":"a","foundationYear":"7","registrationStatus":false,"taxId":"2","localisation":"test","hasParentAffiliation":false,"sector":"test","socialMediaHandle":"http://localhost:3000/new","socialMediaFollowers":"http://localhost:3000/new","description":"6","priorUse":false,"contestType":"test","deadline":"w","specificEvent":false,"howDidYouHear":"blog","featureAgreement":true,"collectEmailAgreement":true,"privacyAgreement":true,"id":"828a9e26-e658-4e1b-916f-627b963ede4e"}' --compressed
+
 
 ```
 
