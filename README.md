@@ -6,7 +6,7 @@ It is served out of an AWS S3 bucket
 
 ## OPS
 
-App currently hosted at: http://lambda-form-dev-websitebucket-iiaiww8c3g6k.s3-website-ap-southeast-2.amazonaws.com/
+App currently hosted at: http://lambda-form-dev-websitebucket-mlzenqtr9rcl.s3-website-us-east-1.amazonaws.com
 
 The app uses the serverless npm package to manae resources in AWS.
 
@@ -21,9 +21,9 @@ Make changes to the aws setup by updating `serverless.yml` and pushing the chang
 Test the api with cURL:
 
 ```shell
-curl --request GET "https://njyblx6z55.execute-api.ap-southeast-2.amazonaws.com/dev/entries"
+curl --request GET "https://9wrlwjpyjh.execute-api.us-east-1.amazonaws.com/dev/entries"
 
-curl --data '{"title": "Here is an application"}' --request PUT "https://njyblx6z55.execute-api.ap-southeast-2.amazonaws.com/dev/entry/1"
+curl --data '{"title": "Here is an application"}' --request PUT "https://9wrlwjpyjh.execute-api.us-east-1.amazonaws.com/dev/entry/1"
 
 ```
 
@@ -36,7 +36,7 @@ npm run build
 Then upload static website assets:
 
 ```shell
-aws-vault exec devopsgirls -- aws s3 sync build/ s3://lambda-form-dev-websitebucket-iiaiww8c3g6k
+aws-vault exec devopsgirls -- aws s3 sync build/ s3://lambda-form-dev-websitebucket-mlzenqtr9rcl
 ```
 
 ## Available Scripts
