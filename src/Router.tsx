@@ -8,6 +8,7 @@ import Nav from "./components/Nav/Nav";
 const AppRouter = () => (
   <BrowserRouter>
     <Route path="/">
+      <Nav />
       <>
         <Switch>
           <Route path="/" exact component={Entries} />
@@ -16,7 +17,6 @@ const AppRouter = () => (
         </Switch>
       </>
     </Route>
-    <Nav />
   </BrowserRouter>
 );
 

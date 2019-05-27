@@ -99,7 +99,7 @@ function EntryForm({ history }: RouterProps) {
   ];
 
   return (
-    <form style={{ position: "relative", top: "50px" }}>
+    <form style={{ position: "relative" }}>
       {transitions.map(({ item, props, key }) => {
         const Step = steps[item];
         return <Step key={key} style={props} />;

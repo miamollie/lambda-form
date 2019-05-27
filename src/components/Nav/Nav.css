@@ -5,7 +5,7 @@ nav {
   align-items: center;
   height: 30px;
   max-width: 50%;
-  margin: 0 auto;
+  margin: 0 auto 50px auto;
 }
 
 nav a {
