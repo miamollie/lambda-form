@@ -54,18 +54,29 @@ function EntryForm({ history }: RouterProps) {
     collectEmailAgreement: true,
     privacyAgreement: true
   });
-  const [step, setCurrentStep] = useState(0);
-  const transitions = useTransition(step, p => p, {
-    from: { opacity: 0, transform: "translate3d(100%,0,0)" },
+  const [currentStep, setCurrentStep] = useState(0);
+  const [prevStep, setPrevStep] = useState(0);
+  if (currentStep !== prevStep) setPrevStep(currentStep);
+  const transitions = useTransition(currentStep, p => p, {
+    unique: true,
+    from: {
+      opacity: 0,
+      transform: `translate3d(${(currentStep - prevStep) * 100}%,0,0)`
+    },
     enter: { opacity: 1, transform: "translate3d(0%,0,0)" },
-    leave: { opacity: 0, transform: "translate3d(-50%,0,0)" }
+    leave: {
+      opacity: 0,
+      transform: `translate3d(${(prevStep - currentStep) * 100}%,0,0)`
+    }
   });
 
   function goForward() {
-    setCurrentStep(step + 1);
+    setCurrentStep(currentStep + 1);
+    setPrevStep(currentStep);
   }
   function goBack() {
-    setCurrentStep(step - 1);
+    setCurrentStep(currentStep - 1);
+    setPrevStep(currentStep);
   }
   function onSubmit() {
     const id = uuid();
@@ -95,20 +106,20 @@ function EntryForm({ history }: RouterProps) {
       })}
       <MobileStepper
         position="bottom"
-        activeStep={step}
+        activeStep={currentStep}
         steps={steps.length}
         variant="progress"
         nextButton={
           <Button
             size="small"
             onClick={goForward}
-            disabled={step === steps.length - 1}
+            disabled={currentStep === steps.length - 1}
           >
             <KeyboardArrowRight />
           </Button>
         }
         backButton={
-          <Button size="small" onClick={goBack} disabled={step === 0}>
+          <Button size="small" onClick={goBack} disabled={currentStep === 0}>
             <KeyboardArrowLeft />
           </Button>
         }
