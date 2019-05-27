@@ -66,17 +66,22 @@ Your app is ready to be deployed!
 
 ## TODO
 
-- [ ] Remove hardcoded config (api endpoint, s3 bucket etc)
 - [ ] Add auth handling to the endpoint
-- [ ] Flesh out the form, add validation and add user feedback for submissions
-- [ ] Add a page to view submissions
+- [ ] Add validation to the form (both f/e and b/e: dynamo db can't handle empty form fields)
+- [ ] Add a page to view submissions (this month's submissions and option to view older)
 
-### ...maybe..?
+### And then...
 
-- [ ] Add a slack notification for new successful applications
+- [ ] Fire an "application received" email to the applicant on successful submission
+- [ ] Add a slack notification for new application
+- [ ] Add accept/decline UI which sets a field on the application
+- [ ] Add assign account manager step to "accept" application
+- [ ] On decline, fire an email with the powerpack upgrade
+- [ ] On success, fire an email with the success email and inform relevant account manager
 
 ## Once it's looking good
 
-- [ ] Recreated all the resources in the Platform acc
 - [ ] Set up CI
+- [ ] Remove hardcoded config (api endpoint, s3 bucket etc)
+- [ ] Recreated all the resources in the Platform acc
 - [ ] Add a Route53 record or something so it's hosted on the 99designs domain instead
