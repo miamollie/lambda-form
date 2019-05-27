@@ -74,16 +74,21 @@ function EntryForm({ history }: RouterProps) {
     setCurrentStep(currentStep + 1);
     setPrevStep(currentStep);
   }
+
   function goBack() {
     setCurrentStep(currentStep - 1);
     setPrevStep(currentStep);
   }
+
   function onSubmit() {
     const id = uuid();
     axios
-      .put(`${API_BASE_URL}/entry/${id}`, { ...values, id }) //TODO SEND A SUCCESS EMAIL WITH THE FORM CONTENT!
+      .put(`${API_BASE_URL}/entry/${id}`, { ...values, id })
       .then(() => history.push("/thank-you"))
-      .catch(() => window.alert("oh noes there was an error"));
+      .catch(e => {
+        window.alert("oh noes there was an error");
+        console.log(e);
+      });
   }
 
   const steps = [
@@ -111,6 +116,7 @@ function EntryForm({ history }: RouterProps) {
         variant="progress"
         nextButton={
           <Button
+            aria-label="Previous step"
             size="small"
             onClick={goForward}
             disabled={currentStep === steps.length - 1}
@@ -119,7 +125,12 @@ function EntryForm({ history }: RouterProps) {
           </Button>
         }
         backButton={
-          <Button size="small" onClick={goBack} disabled={currentStep === 0}>
+          <Button
+            aria-label="Next step"
+            size="small"
+            onClick={goBack}
+            disabled={currentStep === 0}
+          >
             <KeyboardArrowLeft />
           </Button>
         }
